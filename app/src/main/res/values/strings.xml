@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">CryptoCompanion</string>
+    <string name="main_image">MainActivity Image</string>
+    <string name="exchanges">Exchanges</string>
+    <string name="buy">Buy</string>
+    <string name="sell">Sell</string>
+</resources>
