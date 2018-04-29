@@ -92,9 +92,9 @@ public class CurrencyRatesActivity extends AppCompatActivity {
                         }
                     }
                 });
-                handler.postDelayed(this, 10000);
+                handler.postDelayed(this, 20000);
             }
-        }, 10000);
+        }, 20000);
 
         System.out.println("OnCreate Method Finished");
 
