@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +27,8 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class CurrencyRatesActivity extends AppCompatActivity {
 
@@ -51,6 +54,8 @@ public class CurrencyRatesActivity extends AppCompatActivity {
 
     TableLayout tableLayout;
 
+    Handler handler = new Handler();
+
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,18 +72,48 @@ public class CurrencyRatesActivity extends AppCompatActivity {
             t.setText("Rate Card");
         }
         tableLayout = (TableLayout)findViewById(R.id.tableLayout);
-        ContentDownloader cd = new ContentDownloader();
 
+        populateData();
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                populateData();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(CurrencyRatesActivity.this, "Data Refrteshed", Toast.LENGTH_SHORT).show();
+                        if(tableLayout.getChildCount()!=1){
+                                    tableLayout.removeView(tableLayout.getChildAt(1));
+                                    tableLayout.removeView(tableLayout.getChildAt(1));
+                                    tableLayout.removeView(tableLayout.getChildAt(1));
+                                    tableLayout.removeView(tableLayout.getChildAt(1));
+                                    //Toast.makeText(CurrencyRatesActivity.this, "Removed Data", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                handler.postDelayed(this, 10000);
+            }
+        }, 10000);
+
+        System.out.println("OnCreate Method Finished");
+
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        handler.removeCallbacksAndMessages(null);
+    }
+
+    public void populateData(){
+        ContentDownloader cd = new ContentDownloader();
         if(commodity.equals("Bitcoin")){
             cd.execute(bitcoinAPIs[0],bitcoinAPIs[1],bitcoinAPIs[2],bitcoinAPIs[3]);
         }else if(commodity.equals("Ethereum")){
             cd.execute(ethereumAPIs[0],ethereumAPIs[1],ethereumAPIs[2],ethereumAPIs[3]);
         }
-
-
-
-
-
     }
 
 
@@ -89,6 +124,12 @@ public class CurrencyRatesActivity extends AppCompatActivity {
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
         @Override
         protected TableRow[] doInBackground(String... urls) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    progressBar2.setVisibility(View.VISIBLE);
+                }
+            });
             ArrayList<String> al = new ArrayList<>();
             for(int i=0; i<=3; i++){
                 String s = urls[i];

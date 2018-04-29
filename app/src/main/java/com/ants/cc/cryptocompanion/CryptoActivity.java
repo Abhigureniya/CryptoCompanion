@@ -56,6 +56,6 @@ public class CryptoActivity extends AppCompatActivity {
             public void run() {
                 progressBar.setVisibility(View.INVISIBLE);
             }
-        },500);
+        },700);
     }
 }
