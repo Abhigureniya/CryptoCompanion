@@ -34,7 +34,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
 
-         <!--Row 1 with single column
+        <!--Row 1 with single column
         <TableRow
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -117,5 +117,15 @@
         </TableRow>-->
 
     </TableLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="93dp"
+        android:layout_height="87dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
